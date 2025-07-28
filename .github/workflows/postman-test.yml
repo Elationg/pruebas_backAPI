@@ -27,8 +27,8 @@ jobs:
           newman run ./postman-tests/collection.json \
             --environment ./postman-tests/environment.json \
             --iteration-data ./postman-tests/data.csv \
-            --reporters cli,junit \
-            --reporter-junit-export newman-results.xml
+            --reporters cli,htmlextra \
+            --reporter-htmlextra-export ./report/report.html
         continue-on-error: true
           
       - name: Upload Newman Report
@@ -40,8 +40,8 @@ jobs:
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
-            github_token: ${{ secrets.GITHUB_TOKEN }}
-            publish_dir: ./report
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./report
 
       - name: Mostrar URL de GitHub Pages
         run: |
