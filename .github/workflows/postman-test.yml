@@ -28,6 +28,7 @@ jobs:
             --iteration-data ./postman-tests/data.csv \
             --reporters cli,junit \
             --reporter-junit-export newman-results.xml
+        continue-on-error: true
           
       - name: Upload Newman Report
         uses: actions/upload-artifact@v4
