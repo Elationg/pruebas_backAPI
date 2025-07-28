@@ -28,7 +28,7 @@ jobs:
             --environment ./postman-tests/environment.json \
             --iteration-data ./postman-tests/data.csv \
             --reporters cli,htmlextra \
-            --reporter-htmlextra-export ./report/report.html
+            --reporter-htmlextra-export ./report/index.html
         continue-on-error: true
           
       - name: Upload Newman Report
