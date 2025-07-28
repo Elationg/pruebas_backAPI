@@ -1,0 +1,16 @@
+# Node modules (por si usas node para Newman o scripts)
+node_modules/
+
+# Archivos de logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Carpetas de reportes locales
+coverage/
+reports/
+test-results/
+
+# Archivos de configuración local de IDEs (opcional)
+.vscode/
+.idea/

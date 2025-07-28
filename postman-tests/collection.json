@@ -1,0 +1,463 @@
+{
+	"info": {
+		"_postman_id": "b999362b-b6c6-4909-8c3b-8a1fd255a5f9",
+		"name": "Backend E2E",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32522732"
+	},
+	"item": [
+		{
+			"name": "New Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Código de estado 200\", () => {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Token recibido correctamente\", () => {\r",
+							"  const jsonData = pm.response.json();\r",
+							"  pm.expect(jsonData).to.have.property(\"access_token\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"packages": {},
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"email\": \"tester@adl.com\",\r\n\"password\": \"testerEngineer\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/login",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Código de estado es 200 - Clientes obtenidos\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"La respuesta es un arreglo o vacío\", function () {\r",
+							"    pm.expect(jsonData).to.be.an(\"array\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Cada cliente tiene los campos esperados\", function () {\r",
+							"    if (jsonData.length > 0) {\r",
+							"        const client = jsonData[0];\r",
+							"        pm.expect(client).to.have.all.keys(\"id\", \"name\", \"cuit\", \"email\", \"phone\", \"address\", \"balance\", \"is_active\", \"created_at\", \"updated_at\", \"deleted_at\");\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Cada cliente tiene estructura válida\", function () {\r",
+							"    const jsonData = pm.response.json();\r",
+							"\r",
+							"    pm.expect(jsonData).to.be.an(\"array\");\r",
+							"\r",
+							"    if (jsonData.length > 0) {\r",
+							"        jsonData.forEach(cliente => {\r",
+							"            pm.expect(cliente).to.have.property(\"id\").that.is.a(\"number\");\r",
+							"\r",
+							"            // name puede ser string o null (ajustar según requisitos)\r",
+							"            if (cliente.name !== null) {\r",
+							"                pm.expect(cliente.name).to.be.a(\"string\");\r",
+							"            }\r",
+							"\r",
+							"            // email puede ser string o null\r",
+							"            if (cliente.email !== null) {\r",
+							"                pm.expect(cliente.email).to.be.a(\"string\").and.includes(\"@\");\r",
+							"            }\r",
+							"\r",
+							"            pm.expect(cliente).to.have.property(\"balance\");\r",
+							"            const balance = Number(cliente.balance);\r",
+							"            pm.expect(isNaN(balance)).to.be.false;\r",
+							"            pm.expect(balance).to.be.a(\"number\");\r",
+							"\r",
+							"            pm.expect(cliente).to.have.property(\"is_active\").that.is.a(\"boolean\");\r",
+							"        });\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"pm.test(\"El balance es numérico (como string o número)\", function () {\r",
+							"    if (jsonData.length > 0) {\r",
+							"        const balance = jsonData[0].balance;\r",
+							"        pm.expect(parseFloat(balance)).to.be.a(\"number\");\r",
+							"    }\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/clients",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"clients"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const status = pm.response.code;\r",
+							"\r",
+							"pm.test(\"Código de estado esperado\", function () {\r",
+							"    const code = pm.response.code;\r",
+							"    // Aceptar 200 y 201 como éxito; 400, 422 como error esperado\r",
+							"    pm.expect(code).to.be.oneOf([200, 201, 400, 422]);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Se creó cliente y se guardó el ID (si éxito)\", function () {\r",
+							"    if (pm.response.code === 200 || pm.response.code === 201) {\r",
+							"        const json = pm.response.json();\r",
+							"        const id = json.id;\r",
+							"        pm.environment.set(\"last_client_id\", id);\r",
+							"        pm.expect(id).to.satisfy(val => typeof val === \"string\" || typeof val === \"number\");\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Validar contenido de la respuesta según código\", function () {\r",
+							"    let json;\r",
+							"    try {\r",
+							"        json = pm.response.json();\r",
+							"    } catch (e) {\r",
+							"        pm.expect.fail(\"Error al analizar JSON de la respuesta\");\r",
+							"    }\r",
+							"    const code = pm.response.code;\r",
+							"\r",
+							"    if (code === 200 || code === 201) {\r",
+							"        // Caso éxito: respuesta debe tener propiedades del cliente\r",
+							"        pm.expect(json).to.have.property(\"id\");\r",
+							"        pm.expect(json).to.have.property(\"name\");\r",
+							"        pm.expect(json).to.have.property(\"email\");\r",
+							"        // Validar tipos básicos\r",
+							"        pm.expect(json.id).to.satisfy(id => typeof id === \"number\" || typeof id === \"string\");\r",
+							"        pm.expect(json.name).to.be.a(\"string\");\r",
+							"        pm.expect(json.email).to.be.a(\"string\").and.includes(\"@\");\r",
+							"    } else {\r",
+							"        // Caso error: debe tener mensaje o errores\r",
+							"        pm.expect(json).to.have.any.keys(\"message\", \"errors\");\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"\r",
+							"\r",
+							"pm.test(\"Código de estado es 201 o 200\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Cliente creado correctamente\", function () {\r",
+							"    const json = pm.response.json();\r",
+							"    pm.expect(json).to.have.property(\"id\");\r",
+							"    pm.expect(json.name).to.be.a(\"string\");\r",
+							"    pm.expect(json.cuit).to.be.a(\"string\");\r",
+							"    pm.expect(json.balance).to.match(/^\\d+(\\.\\d{1,2})?$/); // formato decimal\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Estado activo es booleano\", function () {\r",
+							"    const json = pm.response.json();\r",
+							"    pm.expect(json.is_active).to.be.a(\"boolean\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Mensaje esperado si falla\", function () {\r",
+							"    if (pm.response.code !== 201) {\r",
+							"        const json = pm.response.json();\r",
+							"        console.log(\"Error recibido:\", json);\r",
+							"        pm.expect(json).to.have.property(\"message\");\r",
+							"    }\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Test Cliente\",\r\n  \"cuit\": \"20-00000000-8\",\r\n  \"email\": \"testclient2e@example.com\",\r\n  \"phone\": \"+54 9 11 1111-1111\",\r\n  \"address\": \"Test 123\",\r\n  \"balance\": 1000,\r\n  \"is_active\": true\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/clients",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"clients"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Código de estado es 200, 201 o 204\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Cliente actualizado correctamente\", function () {\r",
+							"    if (pm.response.code !== 204) {\r",
+							"        const json = pm.response.json();\r",
+							"        pm.expect(json).to.have.property(\"id\");\r",
+							"        pm.expect(json.name).to.be.a(\"string\");\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Balance actualizado es válido\", function () {\r",
+							"    if (pm.response.code !== 204) {\r",
+							"        const json = pm.response.json();\r",
+							"        pm.expect(parseFloat(json.balance)).to.be.a(\"number\");\r",
+							"    }\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Cliente Editado\",\r\n  \"balance\": 9999\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/clients/{{last_client_id}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"clients",
+						"{{last_client_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Código de estado es 200, 202 o 204\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([200, 202, 204]);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Cliente eliminado correctamente (si respuesta tiene body)\", function () {\r",
+							"    if (pm.response.code === 200 || pm.response.code === 202) {\r",
+							"        const json = pm.response.json();\r",
+							"        pm.expect(json).to.have.property(\"message\");\r",
+							"        pm.expect(json.message.toLowerCase()).to.include(\"eliminado\");\r",
+							"    }\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/clients/{{last_client_id}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"clients",
+						"{{last_client_id}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

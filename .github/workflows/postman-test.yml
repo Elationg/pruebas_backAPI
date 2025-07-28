@@ -1,0 +1,36 @@
+name: Run Postman tests with Newman
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  newman:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+
+      - name: Install Newman
+        run: npm install -g newman
+
+      - name: Run Postman Collection with Newman
+        run: |
+          newman run ./postman-tests/collection.json \
+            --environment ./postman-tests/environment.json \
+            --iteration-data ./postman-tests/data.csv \
+            --reporters cli,junit \
+            --reporter-junit-export newman-results.xml
+          
+      - name: Upload Newman Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: newman-report
+          path: newman-results.xml

@@ -1,0 +1,16 @@
+name,cuit,email,phone,address,balance,is_active
+Cliente válido,20304050,valido@example.com,+54 9 11 1111-1111,Calle Falsa 123,9999.00,true
+Sin nombre,20304051,sin_nombre@example.com,+54 9 11 2222-2222,Calle Verdadera 456,5000,true
+Nombre largo Nombre largo Nombre largo Nombre largo Nombre largo Nombre largo Nombre largo Nombre largo Nombre largo Nombre largo ,20304052,largo@example.com,+54 9 11 3333-3333,Calle Larga 789,10000,true
+CUIT duplicado,20304050,duplicado@example.com,+54 9 11 4444-4444,Otra Calle,4000,true
+Email mal formado,20304053,invalidoemail.com,+54 9 11 5555-5555,Calle Email,2000,true
+Balance string,20304054,balance_string@example.com,+54 9 11 6666-6666,Calle Balance,diezmil,true
+Activo inválido,20304055,invalidoactivo@example.com,+54 9 11 7777-7777,Calle Activo,1000,maybe
+,,,,,,
+Cliente falso,99999999,cliente.falso@example.com,123,X,-500,false
+Cliente booleano falso,123123123,cliente.booleano@example.com,+54 9 11 8888-8888,Calle Lógica,0,false
+Cliente nulo,00000000,,,,,
+Cliente válido 2,20304056,valido2@example.com,+54 9 11 9999-9999,Calle 2,12000,true
+Cliente sin CUIT,,sincuit@example.com,+54 9 11 0000-0000,Calle sin cuit,100,true
+Cliente repetido,20304050,repetido@example.com,+54 9 11 1111-1111,Calle repetida,200,true
+Cliente tipo incorrecto,boolean,badtype@example.com,+54 9 11 1234-1234,Tipo error,true,false

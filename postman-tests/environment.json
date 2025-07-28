@@ -1,0 +1,33 @@
+{
+	"id": "17d2fc68-6ac7-420f-b594-696eb29ad62d",
+	"name": "backend-env",
+	"values": [
+		{
+			"key": "baseUrl",
+			"value": "https://api-tester-adl.leonardojose.dev",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "token",
+			"value": "",
+			"type": "secret",
+			"enabled": true
+		},
+		{
+			"key": "clientId",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "last_client_id",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		}
+	],
+	"_postman_variable_scope": "environment",
+	"_postman_exported_at": "2025-07-28T21:21:46.555Z",
+	"_postman_exported_using": "Postman/11.53.5"
+}
