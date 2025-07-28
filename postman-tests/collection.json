@@ -20,6 +20,9 @@
 							"pm.test(\"Token recibido correctamente\", () => {\r",
 							"  const jsonData = pm.response.json();\r",
 							"  pm.expect(jsonData).to.have.property(\"access_token\");\r",
+							"\r",
+							"    pm.environment.set(\"token\", jsonData.access_token);\r",
+							"\r",
 							"});\r",
 							""
 						],
@@ -30,8 +33,11 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"packages": {},
-						"type": "text/javascript"
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
 					}
 				}
 			],
